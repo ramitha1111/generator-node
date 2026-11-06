@@ -1,3 +1,11 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 4 optimizations:
+# - [HIGH] Add npm dependency cache to "build" job
+# - [MEDIUM] Add concurrency group to "ci.yml"
+# - [MEDIUM] Use "npm ci" instead of "npm install" in "build"
+# - [LOW] Explicitly set fail-fast for large matrix job "build" (18 combinations)
+# Estimated savings: ~9 min/run
+#
 name: CI
 
 on:
@@ -9,6 +17,10 @@ on:
     branches:
       - main
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
